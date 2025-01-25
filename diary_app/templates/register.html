@@ -2,6 +2,35 @@
 
 {% block content %}
 
-<h1 align="center">Register</h1>
+<form method="POST">
+    <h3 align="center">Registration</h3>
+    
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required/>
+    
+    </div>
+    
+    <div class="form-group">
+      <label for="fullNames">Full Names</label>
+      <input type="text" class="form-control" id="fullNames" name="fullNames" placeholder="Enter full names" required/>
+    </div>
+    
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required/>
+    </div>
+    
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" class="form-control" id="confirmPassword"name="confirmPassword" placeholder="Confirm password" required/>
+    </div>
+    
+    <br/>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br/>
+<p>Don't have an account? <a href="/login" id="Login">Login here</a></p>
 
 {% endblock %}
