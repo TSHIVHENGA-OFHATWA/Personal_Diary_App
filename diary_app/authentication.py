@@ -64,13 +64,57 @@ def register():
  
 @authentication.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    Handles user login.
 
-   return render_template("login.html")
+    Methods:
+    - GET: Render the login page.
+    - POST: Process the login form and authenticate the user.
+
+    Workflow:
+    1. Retrieve form data (email, password).
+    2. Check if the user exists in the database.
+    3. Verify the password using `check_password_hash`.
+    4. If authenticated, log the user in and redirect to the dashboard.
+    5. If authentication fails, flash an error message.
+
+    Returns:
+        Rendered HTML template for login if GET or authentication fails.
+        Redirect to the dashboard if login is successful.
+    """
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if check_password_hash(user.password, password):
+                flash('Logged in successfully!', category='success')
+                login_user(user, remember=True)
+                return redirect(url_for('controllers.dashboard'))
+            else:
+                flash('Incorrect password, try again.', category='error')
+        else:
+            flash('Email does not exist.', category='error')
+
+    return render_template("login.html", user=current_user)
 
 
 @authentication.route('/logout')
 @login_required
 def logout():
-    
+    """
+    Handles user logout.
+
+    Requires:
+        The user must be logged in to access this route.
+
+    Workflow:
+    1. Log the user out using `logout_user`.
+    2. Redirect to the login page.
+
+    Returns:
+        Redirect to the login page.
+    """
     logout_user()
-    return render_template("dashboard.html")
+    return redirect(url_for('authentication.login'))
