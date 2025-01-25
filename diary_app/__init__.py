@@ -61,7 +61,28 @@ def create_app():
     with app.app_context():
        conn.create_all()
 
-   def create_database(app):
+    login_manager = LoginManager()
+    login_manager.login_view = 'authentication.login'
+    login_manager.init_app(app)
+
+
+    @login_manager.user_loader
+    def load_user(id):
+        """
+        Load the user by their ID for Flask-Login.
+
+        Args:
+            id (int): The user ID.
+
+        Returns:
+            User: The user instance corresponding to the given ID.
+        """
+        return User.query.get(int(id))
+    
+    return app
+
+
+def create_database(app):
     """
     Create the SQLite database if it doesn't already exist.
 
