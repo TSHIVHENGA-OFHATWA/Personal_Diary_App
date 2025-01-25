@@ -27,10 +27,10 @@ def register():
        - Ensure password meets the length requirement.
     3. Hash the password using `generate_password_hash`.
     4. Create a new `User` object and save it to the database.
-    5. Log the user in and redirect to the dashboard if registration is successful.
+    5. Log user in and redirect to the dashboard if registration is successful.
 
     Returns:
-        Rendered HTML template for registration if GET or form validation fails.
+        Rendered HTML template for registration if GET or form validation fails
         Redirect to the dashboard if registration is successful.
     """
     if request.method == 'POST':
@@ -38,22 +38,22 @@ def register():
         full_names = request.form.get('fullNames')
         password = request.form.get('password')
         confirmPassword = request.form.get('confirmPassword')
-     
+
         user = User.query.filter_by(email=email).first()
         if user:
             flash('Email already exists.', category='error')
         elif len(email) < 2:
             flash('Email must be greater than 2 characters.', category='error')
         elif len(full_names) < 2:
-            flash('full names must be greater than 2 character.', category='error')
+            flash('full names is too short (>=3).', category='error')
         elif password != confirmPassword:
             flash('Password don\'t match.', category='error')
         elif len(password) < 8:
             flash('Password must be at least 8 characters.', category='error')
         else:
-            hashed_password=generate_password_hash(password, method='pbkdf2:sha256')
-            new_user = User(email=email, full_names=full_names,
-            password=hashed_password)
+            hash_pas = generate_password_hash(password, method='pbkdf2:sha256')
+            new_user = User(
+                    email=email, full_names=full_names, password=hash_pas)
             conn.session.add(new_user)
             conn.session.commit()
             login_user(new_user, remember=True)
@@ -61,7 +61,8 @@ def register():
             return redirect(url_for('controllers.dashboard'))
 
     return render_template("register.html", user=current_user)
- 
+
+
 @authentication.route('/login', methods=['GET', 'POST'])
 def login():
     """
