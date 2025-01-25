@@ -19,19 +19,13 @@ Python: Core programming language.
 Flask: Web framework for building the application.
 Flask-SQLAlchemy: ORM for database management.
 Flask-WTF: For form validation and handling.
-SQLite/MySQL/PostgreSQL: Database for storing user and diary entry data (configurable).
+SQLite: Database for storing user and diary entry data (configurable).
 
 # Frontend
 
-HTML5 & CSS3: For designing responsive and accessible layouts.
+HTML5: For designing responsive and accessible layouts.
 Bootstrap: Frontend framework for styling and UI components.
 JavaScript: Adds interactivity and dynamic behavior to the app.
-
-# DevOps
-
-Docker: Containerization for consistent development and deployment environments.
-GitHub Actions: Continuous Integration/Continuous Deployment (CI/CD).
-Gunicorn: WSGI server for production deployment.
 
 # Installation
 
@@ -83,7 +77,6 @@ the application will generate it automatically and save it in a `.env` file. Fol
 Register for a new account or log in with your credentials.
 Add entries by providing a title, content, and optional tags.
 View and manage all your entries in a clean, intuitive dashboard.
-Search for specific entries using keywords or dates.
 
 # Contact
 
