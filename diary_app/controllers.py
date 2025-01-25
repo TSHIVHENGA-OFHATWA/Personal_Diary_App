@@ -23,7 +23,7 @@ def dashboard():
 
     Workflow:
     - If the request method is POST:
-        1. Retrieve the diary entry from the form using `request.form.get('note')`.
+        1. Retrieve the diary entry from the form.
         2. Validate the diary entry (ensure it's not empty).
         3. If valid, save the new diary entry to the database.
         4. Flash a success message.
@@ -33,14 +33,15 @@ def dashboard():
     Raises:
         None
     """
-    if request.method == 'POST': 
-        note = request.form.get('note')#Gets the note from the HTML 
+
+    if request.method == 'POST':
+        note = request.form.get('note')
 
         if len(note) < 1:
-            flash('Entry is too short!', category='error') 
+            flash('Entry is too short!', category='error')
         else:
-            new_diary = Diary(info=note, user_id=current_user.id)  #providing the schema for the note 
-            conn.session.add(new_diary) #adding the note to the database 
+            new_diary = Diary(info=note, user_id=current_user.id)
+            conn.session.add(new_diary)
             conn.session.commit()
             flash('Diary entry saved!', category='success')
 
